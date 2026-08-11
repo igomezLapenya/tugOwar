@@ -35,10 +35,20 @@
           </button>
         </div>
 
-        <app-vote [userId]="auth.user()!.id" />
+        @if (auth.isAllowedVoter()) {
+          <app-vote [userId]="auth.user()!.id" />
 
-        @if (voteService.hasVoted()) {
-          <app-tally />
+          @if (voteService.hasVoted()) {
+            <app-tally />
+          }
+        } @else {
+          <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+            <p class="font-medium">Esta cuenta no está autorizada para votar.</p>
+            <p class="text-sm mt-1">
+              Solo puede votar el personal invitado explícitamente. Inicia sesión con la cuenta de GitHub
+              asociada a tu correo corporativo o contacta al organizador de la encuesta.
+            </p>
+          </div>
         }
       </div>
     }

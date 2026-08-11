@@ -19,10 +19,11 @@ export class AppComponent implements OnInit {
     public auth: AuthService,
     public voteService: VoteService
   ) {
-    // When auth state changes, load or clear vote
+    // When auth state changes, load or clear vote (solo para votantes autorizados,
+    // ya que RLS rechazaría la consulta para cualquier otro usuario)
     effect(() => {
       const user = this.auth.user();
-      if (user) {
+      if (user && this.auth.isAllowedVoter()) {
         this.voteService.fetchMyVote(user.id);
       } else {
         this.voteService.clearVote();
@@ -31,9 +32,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // If already authenticated on init, load vote
+    // If already authenticated and authorized on init, load vote
     const user = this.auth.user();
-    if (user) {
+    if (user && this.auth.isAllowedVoter()) {
       this.voteService.fetchMyVote(user.id);
     }
   }

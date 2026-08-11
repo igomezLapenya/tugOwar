@@ -10,7 +10,16 @@ describe('AuthService', () => {
 
   const mockUser: User = {
     id: '123',
-    email: 'test@example.com',
+    email: 'ivan.gomez@vivaticket.com',
+    app_metadata: {},
+    user_metadata: {},
+    aud: 'authenticated',
+    created_at: new Date().toISOString()
+  } as User;
+
+  const mockUnauthorizedUser: User = {
+    id: '456',
+    email: 'someone.else@example.com',
     app_metadata: {},
     user_metadata: {},
     aud: 'authenticated',
@@ -106,5 +115,24 @@ describe('AuthService', () => {
     expect(service.isAuthenticated()).toBeFalse();
     expect(service.session()).toBeNull();
     expect(service.user()).toBeNull();
+  });
+
+  it('should mark a user with an allowlisted email as an allowed voter', () => {
+    if (authStateCallback) {
+      authStateCallback('SIGNED_IN', mockSession);
+    }
+    expect(service.isAllowedVoter()).toBeTrue();
+  });
+
+  it('should not mark a user with a non-allowlisted email as an allowed voter', () => {
+    const unauthorizedSession = { ...mockSession, user: mockUnauthorizedUser } as Session;
+    if (authStateCallback) {
+      authStateCallback('SIGNED_IN', unauthorizedSession);
+    }
+    expect(service.isAllowedVoter()).toBeFalse();
+  });
+
+  it('should not mark an anonymous user as an allowed voter', () => {
+    expect(service.isAllowedVoter()).toBeFalse();
   });
 });
