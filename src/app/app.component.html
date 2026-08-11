@@ -1,58 +1,136 @@
 <div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-  <div class="max-w-2xl w-full text-center">
-    <app-illustration />
-
+  <main class="max-w-3xl w-full text-center">
     <h1 class="text-4xl font-bold text-gray-900 mb-4">¿Adoptamos OpenSpec?</h1>
-    <p class="text-lg text-gray-600 mb-8">Vota sí o no para decidir la adopción de OpenSpec de forma democrática y transparente.</p>
+    <p class="text-lg text-gray-600 mb-8">
+      Conoce la propuesta y vota sí o no para decidir la adopción de OpenSpec de forma democrática y transparente.
+    </p>
 
-    @if (!auth.isAuthenticated()) {
-      <div class="space-y-4">
-        <p class="text-gray-500">Inicia sesión con GitHub para participar en la votación.</p>
-        <button
-          (click)="login()"
-          class="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
-        >
-          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-          </svg>
-          Iniciar sesión con GitHub
-        </button>
+    <section
+      class="carousel"
+      aria-label="Presentación y votación de OpenSpec"
+      tabindex="0"
+      (keydown.arrowleft)="previousSlide()"
+      (keydown.arrowright)="nextSlide()"
+    >
+      <div class="carousel-heading">
+        <span class="carousel-kicker">Antes de votar</span>
+        <h2>{{ slides[activeSlide()].label }}</h2>
+        <p>Diapositiva {{ activeSlide() + 1 }} de {{ slides.length }}</p>
       </div>
-    } @else {
-      <div class="space-y-6">
-        <div class="flex items-center justify-center gap-3">
-          @if (auth.user()?.user_metadata?.['avatar_url']) {
-            <img [src]="auth.user()?.user_metadata?.['avatar_url']" alt="Avatar" class="w-10 h-10 rounded-full" />
-          }
-          <span class="text-gray-700 font-medium">
-            {{ auth.user()?.user_metadata?.['full_name'] || auth.user()?.user_metadata?.['user_name'] || auth.user()?.email }}
-          </span>
-          <button
-            (click)="logout()"
-            class="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            Cerrar sesión
-          </button>
-        </div>
 
-        @if (auth.isAllowedVoter()) {
-          <app-vote [userId]="auth.user()!.id" />
-
-          @if (voteService.hasVoted()) {
-            <app-tally />
-          }
+      <div class="carousel-viewport" aria-live="polite">
+        @if (activeSlide() === 0) {
+          <article class="info-slide">
+            <img
+              src="assets/images/ventajas SPEC driven.png"
+              alt="Ilustración con las ventajas de trabajar con un enfoque SPEC-driven"
+              class="carousel-image"
+              fetchpriority="high"
+            />
+          </article>
+        } @else if (activeSlide() === 1) {
+          <article class="info-slide">
+            <img
+              src="assets/images/porque OpenSPec.png"
+              alt="Ilustración que explica por qué adoptar OpenSpec"
+              class="carousel-image"
+            />
+          </article>
         } @else {
-          <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
-            <p class="font-medium">Esta cuenta no está autorizada para votar.</p>
-            <p class="text-sm mt-1">
-              Solo puede votar el personal invitado explícitamente. Inicia sesión con la cuenta de GitHub
-              asociada a tu correo corporativo o contacta al organizador de la encuesta.
-            </p>
-          </div>
+          <article class="vote-slide">
+            <app-illustration />
+
+            @if (!auth.isAuthenticated()) {
+              <div class="space-y-4">
+                <p class="text-gray-500">Inicia sesión con GitHub para participar en la votación.</p>
+                <button
+                  type="button"
+                  (click)="login()"
+                  class="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483-.012-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                  </svg>
+                  Iniciar sesión con GitHub
+                </button>
+              </div>
+            } @else {
+              <div class="space-y-6">
+                <div class="flex items-center justify-center gap-3">
+                  @if (auth.user()?.user_metadata?.['avatar_url']) {
+                    <img [src]="auth.user()?.user_metadata?.['avatar_url']" alt="Avatar" class="w-10 h-10 rounded-full" />
+                  }
+                  <span class="text-gray-700 font-medium">
+                    {{ auth.user()?.user_metadata?.['full_name'] || auth.user()?.user_metadata?.['user_name'] || auth.user()?.email }}
+                  </span>
+                  <button
+                    type="button"
+                    (click)="logout()"
+                    class="px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+
+                @if (auth.isAllowedVoter()) {
+                  <app-vote [userId]="auth.user()!.id" />
+
+                  @if (voteService.hasVoted()) {
+                    <app-tally />
+                  }
+                } @else {
+                  <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+                    <p class="font-medium">Esta cuenta no está autorizada para votar.</p>
+                    <p class="text-sm mt-1">
+                      Solo puede votar el personal invitado explícitamente. Inicia sesión con la cuenta de GitHub
+                      asociada a tu correo corporativo o contacta al organizador de la encuesta.
+                    </p>
+                  </div>
+                }
+              </div>
+            }
+          </article>
         }
       </div>
-    }
-  </div>
+
+      <div class="carousel-controls">
+        <button
+          type="button"
+          class="carousel-arrow"
+          aria-label="Diapositiva anterior"
+          (click)="previousSlide()"
+        >
+          <span aria-hidden="true">←</span>
+          Anterior
+        </button>
+
+        <div class="carousel-dots" role="tablist" aria-label="Seleccionar diapositiva">
+          @for (slide of slides; track slide.id; let i = $index) {
+            <button
+              type="button"
+              role="tab"
+              [attr.aria-selected]="activeSlide() === i"
+              [attr.aria-label]="'Ir a: ' + slide.label"
+              [class.active]="activeSlide() === i"
+              (click)="selectSlide(i)"
+            >
+              <span aria-hidden="true"></span>
+            </button>
+          }
+        </div>
+
+        <button
+          type="button"
+          class="carousel-arrow"
+          aria-label="Diapositiva siguiente"
+          (click)="nextSlide()"
+        >
+          Siguiente
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+  </main>
 
   <router-outlet />
 </div>

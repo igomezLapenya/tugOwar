@@ -1,4 +1,4 @@
-import { Component, OnInit, effect } from '@angular/core';
+import { Component, OnInit, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { VoteService } from './services/vote.service';
@@ -15,6 +15,29 @@ import { IllustrationComponent } from './components/illustration/illustration.co
 export class AppComponent implements OnInit {
   title = 'tugowar';
 
+  readonly slides = [
+    {
+      id: 'benefits',
+      label: 'Ventajas del enfoque SPEC-driven',
+      image: 'assets/images/ventajas SPEC driven.png',
+      alt: 'Ilustración con las ventajas de trabajar con un enfoque SPEC-driven'
+    },
+    {
+      id: 'openspec',
+      label: '¿Por qué OpenSpec?',
+      image: 'assets/images/porque OpenSPec.png',
+      alt: 'Ilustración que explica por qué adoptar OpenSpec'
+    },
+    {
+      id: 'vote',
+      label: 'Votación',
+      image: null,
+      alt: ''
+    }
+  ] as const;
+
+  readonly activeSlide = signal(0);
+
   constructor(
     public auth: AuthService,
     public voteService: VoteService
@@ -29,6 +52,22 @@ export class AppComponent implements OnInit {
         this.voteService.clearVote();
       }
     });
+  }
+
+  previousSlide(): void {
+    this.activeSlide.update((current) =>
+      current === 0 ? this.slides.length - 1 : current - 1
+    );
+  }
+
+  nextSlide(): void {
+    this.activeSlide.update((current) => (current + 1) % this.slides.length);
+  }
+
+  selectSlide(index: number): void {
+    if (index >= 0 && index < this.slides.length) {
+      this.activeSlide.set(index);
+    }
   }
 
   ngOnInit(): void {
