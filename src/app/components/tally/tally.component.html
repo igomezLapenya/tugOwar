@@ -1,0 +1,39 @@
+@if (voteService.results()) {
+  <div class="mt-8 p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Resultados de la votación</h2>
+
+    <div class="space-y-4">
+      <!-- Yes bar -->
+      <div>
+        <div class="flex justify-between mb-1">
+          <span class="text-sm font-medium text-green-700">Sí</span>
+          <span class="text-sm font-medium text-green-700">{{ voteService.results()?.yes_count }} ({{ yesPercentage() }}%)</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-4">
+          <div
+            class="bg-green-600 h-4 rounded-full transition-all duration-500"
+            [style.width.%]="yesPercentage()"
+          ></div>
+        </div>
+      </div>
+
+      <!-- No bar -->
+      <div>
+        <div class="flex justify-between mb-1">
+          <span class="text-sm font-medium text-red-700">No</span>
+          <span class="text-sm font-medium text-red-700">{{ voteService.results()?.no_count }} ({{ noPercentage() }}%)</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-4">
+          <div
+            class="bg-red-600 h-4 rounded-full transition-all duration-500"
+            [style.width.%]="noPercentage()"
+          ></div>
+        </div>
+      </div>
+
+      <p class="text-sm text-gray-500 text-center mt-2">
+        Total de votos: {{ totalVotes() }}
+      </p>
+    </div>
+  </div>
+}

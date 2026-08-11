@@ -1,0 +1,17 @@
+❯ Building...
+✔ Building...
+Initial chunk files   | Names         |  Raw size | Estimated transfer size
+main-DZ6GXQ5V.js      | main          | 183.13 kB |                49.74 kB
+polyfills-5CFQRCPP.js | polyfills     |  34.59 kB |                11.33 kB
+styles-TSBXIZMC.css   | styles        |   5.55 kB |                 1.44 kB
+
+                      | Initial total | 223.26 kB |                62.52 kB
+
+Application bundle generation complete. [1.091 seconds]
+
+Output location: /Users/igomez/Code/tugOwar/dist/tugowar
+
+
+=== ng serve verification ===
+ng serve started successfully on http://localhost:4200/
+Build completed without errors in watch mode.
