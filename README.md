@@ -2,6 +2,12 @@
 
 Aplicación Angular para votar democráticamente sobre la adopción de OpenSpec. Cada usuario se autentica con GitHub y puede votar sí/no una sola vez (con posibilidad de cambiar su voto). Los resultados agregados se muestran solo después de votar.
 
+## Documentación
+
+- Guía para humanos y agentes: [`docs/README.md`](docs/README.md)
+- Contrato operativo para IA: [`AGENTS.md`](AGENTS.md)
+- Flujo SDD/OpenSpec: [`docs/03-conventions/sdd-workflow.md`](docs/03-conventions/sdd-workflow.md)
+
 ## Tecnologías
 
 - Angular 19 (standalone components, routing, sin SSR)

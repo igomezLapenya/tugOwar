@@ -3,19 +3,25 @@ schema: spec-driven
 # Project context (optional)
 # This is shown to AI when creating artifacts.
 context: |
-  Proyecto: tugOwar — web de encuesta (sí/no) sobre la adopción de OpenSpec.
-  Stack decidido: Angular + Tailwind CSS (frontend), Supabase como backend
-  (Auth con provider GitHub, Postgres para votos). NO hay CSV: la decisión
-  inicial de CSV fue reemplazada por Supabase.
-  Proyecto Supabase: URL y key en variables de entorno (.env, ver .env.example), no en el repo.
-  Reglas de negocio: un voto por usuario (unique por user_id), el usuario
-  puede CAMBIAR su voto (upsert), tally agregado visible tras votar (RPC,
-  sin exponer votos individuales).
-  Visual: montaña con un escalador que porta una bandera de OpenSpec.
-  Estado: greenfield — no existe código de producto todavía.
+  Project: tugOwar — Angular frontend poll app for deciding whether to adopt OpenSpec.
+  Repository profile: frontend-app.
+  Stack: Angular 19 + TypeScript + Tailwind CSS frontend, Supabase Auth/Postgres backend,
+  GitHub OAuth for login, and SQL migrations under supabase/migrations/.
+  Key docs are AGENTS.md and docs/README.md.
+  SDD workflow docs should live at docs/03-conventions/sdd-workflow.md.
+  Environment values come from .env/.env.example and are rendered by scripts/generate-env.js;
+  generated src/environments/environment*.ts files are ignored and must not be edited by hand.
+  Security note: src/app/allowed-voters.ts is client UX only; Supabase RLS in
+  supabase/migrations/0002_allowed_voters.sql is the voting authorization boundary.
+  Manual verification for GitHub OAuth, allowed-voter checks, and two-account E2E may still
+  require a human browser session; record evidence in reports.
 
 # Per-artifact rules
 rules:
+  sdd:
+    - "Follow docs/03-conventions/sdd-workflow.md when it exists; otherwise follow the globally installed OPSX/OpenSpec workflow skills."
+    - "Use global OPSX commands only; this repository was initialized with openspec init --tools none."
+    - "OpenCode uses /opsx-* hyphen syntax; Cursor, Claude Code, and Codex use /opsx:* colon syntax."
   tasks:
     - "Step 0 must create or switch to the feature branch for the change"
     - "Use OpenSpec checkbox format only: '- [ ] X.Y Description'"
