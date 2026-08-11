@@ -31,7 +31,8 @@ export class AuthService {
     const { error } = await this.supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: window.location.origin
+        // Respeta el <base href> compilado para GitHub Pages (/tugOwar/).
+        redirectTo: new URL(document.baseURI).href
       }
     });
     if (error) {
