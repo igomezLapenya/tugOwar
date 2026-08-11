@@ -12,8 +12,8 @@ Aplicación Angular para votar democráticamente sobre la adopción de OpenSpec.
 ## Setup local
 
 ```bash
-npm install
-ng serve
+pnpm install
+pnpm start
 ```
 
 La app estará disponible en `http://localhost:4200`.
@@ -31,7 +31,7 @@ Las credenciales de Supabase se gestionan mediante variables de entorno, nunca s
    SUPABASE_URL=https://your-project-ref.supabase.co
    SUPABASE_KEY=your-publishable-key
    ```
-3. `npm start` y `npm run build` ejecutan automáticamente `scripts/generate-env.js`, que lee `.env` y genera `src/environments/environment.ts` / `environment.prod.ts` (ambos ignorados por git).
+3. `pnpm start` y `pnpm run build` ejecutan automáticamente `scripts/generate-env.js`, que lee `.env` y genera `src/environments/environment.ts` / `environment.prod.ts` (ambos ignorados por git).
 
 La publishable key es pública por diseño y se usa en el cliente. El service key **nunca** debe incluirse en el frontend ni en `.env` de este proyecto.
 
@@ -65,9 +65,9 @@ Ya está aplicada al proyecto remoto. Si necesitas recrearla localmente, ejecuta
 ## Scripts útiles
 
 ```bash
-ng build          # Build de producción
-ng test           # Tests unitarios (Karma + Jasmine)
-ng serve          # Servidor de desarrollo
+pnpm run build    # Build de producción
+pnpm test         # Tests unitarios (Karma + Jasmine)
+pnpm start        # Servidor de desarrollo (ng serve)
 ```
 
 ## Estructura del proyecto

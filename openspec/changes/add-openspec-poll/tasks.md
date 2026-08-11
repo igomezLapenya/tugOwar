@@ -37,7 +37,7 @@
 
 ## 5. Documentación y cierre
 
-- [x] 5.1 Actualizar `README.md` con descripción de la app, setup local (`npm install`, `ng serve`), variables de entorno de Supabase y pasos manuales de GitHub OAuth.
+- [x] 5.1 Actualizar `README.md` con descripción de la app, setup local (`pnpm install`, `pnpm start`), variables de entorno de Supabase y pasos manuales de GitHub OAuth.
 - [x] 5.2 Revisar que `reports/` contiene los logs de build/tests/verificaciones de las tareas 1–4.
 - [x] 5.3 Implementer: verificación final — `ng build`, `ng test` verdes, y checklist de specs (landing-visual, github-auth, poll-voting, poll-results) cumplido antes de marcar `[x]`.
 
