@@ -5,6 +5,9 @@ on:
     branches:
       - main   # cambia si tu rama principal es 'master' u otra
 
+permissions:
+  contents: write   # necesario para que actions-gh-pages pueda pushear a la rama gh-pages
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
