@@ -20,17 +20,20 @@ La app estará disponible en `http://localhost:4200`.
 
 ## Variables de entorno
 
-Las variables de entorno están en `src/environments/environment.ts`:
+Las credenciales de Supabase se gestionan mediante variables de entorno, nunca se commitean en el repo.
 
-```typescript
-export const environment = {
-  production: false,
-  supabaseUrl: 'https://REDACTED_PROJECT_REF.supabase.co',
-  supabaseKey: 'REDACTED_SUPABASE_KEY'
-};
-```
+1. Copia `.env.example` a `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Rellena `.env` con los valores de tu proyecto (Supabase Dashboard → Settings → API):
+   ```
+   SUPABASE_URL=https://your-project-ref.supabase.co
+   SUPABASE_KEY=your-publishable-key
+   ```
+3. `npm start` y `npm run build` ejecutan automáticamente `scripts/generate-env.js`, que lee `.env` y genera `src/environments/environment.ts` / `environment.prod.ts` (ambos ignorados por git).
 
-La publishable key es pública por diseño y se usa en el cliente. El service key **nunca** debe incluirse en el frontend.
+La publishable key es pública por diseño y se usa en el cliente. El service key **nunca** debe incluirse en el frontend ni en `.env` de este proyecto.
 
 ## Pasos manuales requeridos
 
@@ -45,7 +48,7 @@ La publishable key es pública por diseño y se usa en el cliente. El service ke
 
 ### 2. Configurar provider en Supabase
 
-1. Ve al dashboard de Supabase: https://supabase.com/dashboard/project/REDACTED_PROJECT_REF
+1. Ve al dashboard de Supabase: https://supabase.com/dashboard/project/&lt;tu-project-ref&gt;
 2. Navega a **Authentication → Providers**
 3. Habilita **GitHub** y pega el Client ID y Client Secret
 4. Guarda los cambios

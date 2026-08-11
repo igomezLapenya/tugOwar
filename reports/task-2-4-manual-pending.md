@@ -25,7 +25,7 @@ These steps cannot be automated by the implementer because they require:
 
 ### 2. Configure GitHub Provider in Supabase Auth
 
-1. Go to your Supabase project dashboard: https://supabase.com/dashboard/project/REDACTED_PROJECT_REF
+1. Go to your Supabase project dashboard: https://supabase.com/dashboard/project/&lt;your-project-ref&gt;
 2. Navigate to **Authentication → Providers**
 3. Find **GitHub** in the list and click to expand it
 4. Toggle **Enabled** to ON

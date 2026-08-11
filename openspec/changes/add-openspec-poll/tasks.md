@@ -8,7 +8,7 @@
 
 - [x] 1.1 Crear la aplicación Angular (standalone components, routing, sin SSR) en la raíz del repo con `ng new` / `ng generate` según convención actual del CLI.
 - [x] 1.2 Instalar y configurar Tailwind CSS (`tailwind.config`, `styles.css` con directivas) y verificar que una clase de utilidad se aplica en pantalla.
-- [x] 1.3 Instalar `@supabase/supabase-js` y crear `src/environments/` con `supabaseUrl` (`https://REDACTED_PROJECT_REF.supabase.co`) y publishable key. Añadir `environment.ts` local al `.gitignore` si contuviera claves no públicas.
+- [x] 1.3 Instalar `@supabase/supabase-js` y crear `src/environments/` con `supabaseUrl` y publishable key generados desde variables de entorno (`.env`, ver `.env.example`). `environment.ts` y `environment.prod.ts` están en `.gitignore`.
 - [x] 1.4 Verificación: `ng build` y `ng serve` levantan la app vacía sin errores. Guardar log en `reports/task-1-build.log`.
 
 ## 2. Supabase: esquema y configuración

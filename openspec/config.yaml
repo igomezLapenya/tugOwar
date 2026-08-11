@@ -7,7 +7,7 @@ context: |
   Stack decidido: Angular + Tailwind CSS (frontend), Supabase como backend
   (Auth con provider GitHub, Postgres para votos). NO hay CSV: la decisión
   inicial de CSV fue reemplazada por Supabase.
-  Proyecto Supabase: https://REDACTED_PROJECT_REF.supabase.co
+  Proyecto Supabase: URL y key en variables de entorno (.env, ver .env.example), no en el repo.
   Reglas de negocio: un voto por usuario (unique por user_id), el usuario
   puede CAMBIAR su voto (upsert), tally agregado visible tras votar (RPC,
   sin exponer votos individuales).

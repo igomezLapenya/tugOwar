@@ -61,7 +61,7 @@ La montaña/escalador/bandera se implementa como SVG inline en un componente Ang
 
 ### D6: Configuración del proyecto
 
-URL y publishable key de Supabase en `src/environments/`. La publishable key es pública por diseño. El service key **nunca** aparece en el cliente ni en el repo. Proyecto: `https://REDACTED_PROJECT_REF.supabase.co`.
+URL y publishable key de Supabase se leen de variables de entorno (`.env`, no versionado) y se inyectan en `src/environments/` mediante `scripts/generate-env.js` antes de `serve`/`build`/`test`. La publishable key es pública por diseño pero igualmente se mantiene fuera del repo para poder rotarla sin depender del historial de git. El service key **nunca** aparece en el cliente ni en el repo.
 
 ## Risks / Trade-offs
 

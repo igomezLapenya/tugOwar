@@ -3,7 +3,7 @@
 ## Migration Applied
 
 **Method**: Supabase MCP `execute_sql` (remote SQL execution via API)
-**Project**: `REDACTED_PROJECT_REF`
+**Project**: (ver `.env`, no versionado)
 **Migration file**: `supabase/migrations/0001_votes.sql`
 
 ---
