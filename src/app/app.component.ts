@@ -1,21 +1,22 @@
-import { Component, OnInit, effect, signal } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { VoteService } from './services/vote.service';
 import { VoteComponent } from './components/vote/vote.component';
 import { TallyComponent } from './components/tally/tally.component';
 import { IllustrationComponent } from './components/illustration/illustration.component';
+import { CarouselComponent, CarouselSlide } from './components/carousel/carousel.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, VoteComponent, TallyComponent, IllustrationComponent],
+  imports: [RouterOutlet, VoteComponent, TallyComponent, IllustrationComponent, CarouselComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   title = 'tugowar';
 
-  readonly slides = [
+  readonly slides: readonly CarouselSlide[] = [
     {
       id: 'benefits',
       label: 'Ventajas del enfoque SPEC-driven',
@@ -36,8 +37,6 @@ export class AppComponent implements OnInit {
     }
   ] as const;
 
-  readonly activeSlide = signal(0);
-
   constructor(
     public auth: AuthService,
     public voteService: VoteService
@@ -54,21 +53,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  previousSlide(): void {
-    this.activeSlide.update((current) =>
-      current === 0 ? this.slides.length - 1 : current - 1
-    );
-  }
-
-  nextSlide(): void {
-    this.activeSlide.update((current) => (current + 1) % this.slides.length);
-  }
-
-  selectSlide(index: number): void {
-    if (index >= 0 && index < this.slides.length) {
-      this.activeSlide.set(index);
-    }
-  }
 
   ngOnInit(): void {
     // If already authenticated and authorized on init, load vote
