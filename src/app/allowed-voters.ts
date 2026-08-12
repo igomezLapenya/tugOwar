@@ -16,7 +16,7 @@ export const ALLOWED_VOTER_EMAILS: ReadonlySet<string> = new Set([
   'hector.tilve@vivaticket.com',
   'kevin.cerro@vivaticket.com',
   'ivan.gomez@vivaticket.com',
-  'israel.gonzalbez@vivaticket.com',
+  'israelgonzalbez@gmail.com',
   'david.alfageme@vivaticket.com',
   'hernan.cortes@vivaticket.com'
 ]);
