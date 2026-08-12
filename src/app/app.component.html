@@ -6,15 +6,18 @@
     </p>
 
     <app-carousel [slides]="slides" ariaLabel="Presentación y votación de OpenSpec">
-      <ng-template #slideContent let-slide let-index="index">
+      <ng-template #slideContent let-slide let-index="index" let-zoomScale="zoomScale">
         @if (slide.image; as image) {
           <article class="info-slide">
-            <img
-              [src]="image"
-              [alt]="slide.alt ?? ''"
-              class="carousel-image"
-              [attr.fetchpriority]="index === 0 ? 'high' : null"
-            />
+            <div class="carousel-image-frame">
+              <img
+                [src]="image"
+                [alt]="slide.alt ?? ''"
+                class="carousel-image"
+                [style.transform]="'scale(' + zoomScale + ')'"
+                [attr.fetchpriority]="index === 0 ? 'high' : null"
+              />
+            </div>
           </article>
         } @else {
           <article class="vote-slide">

@@ -20,10 +20,43 @@
       @if (slideTemplate(); as template) {
         <ng-container
           [ngTemplateOutlet]="template"
-          [ngTemplateOutletContext]="{ $implicit: slide, slide: slide, index: activeSlide() }"
+          [ngTemplateOutletContext]="{
+            $implicit: slide,
+            slide: slide,
+            index: activeSlide(),
+            zoomScale: zoomScale()
+          }"
         />
       }
     </div>
+
+    @if (slide.image) {
+      <div class="carousel-zoom-controls" aria-label="Controles de zoom de la imagen">
+        <button
+          type="button"
+          class="carousel-zoom-button"
+          aria-label="Alejar imagen"
+          [attr.aria-controls]="panelId()"
+          [disabled]="zoomScale() <= minZoom"
+          (click)="zoomOut()"
+        >
+          <span aria-hidden="true">−</span>
+        </button>
+        <span class="carousel-zoom-level" aria-live="polite" aria-atomic="true">
+          {{ zoomPercentage() }}%
+        </span>
+        <button
+          type="button"
+          class="carousel-zoom-button"
+          aria-label="Acercar imagen"
+          [attr.aria-controls]="panelId()"
+          [disabled]="zoomScale() >= maxZoom"
+          (click)="zoomIn()"
+        >
+          <span aria-hidden="true">+</span>
+        </button>
+      </div>
+    }
 
     <div class="carousel-controls">
       <button

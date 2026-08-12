@@ -12,6 +12,7 @@ export interface CarouselTemplateContext {
   readonly $implicit: CarouselSlide;
   readonly slide: CarouselSlide;
   readonly index: number;
+  readonly zoomScale: number;
 }
 
 let carouselId = 0;
@@ -26,6 +27,11 @@ export class CarouselComponent {
   readonly slides = input.required<readonly CarouselSlide[]>();
   readonly ariaLabel = input('Carousel');
   readonly activeSlide = signal(0);
+  readonly zoomScale = signal(1);
+  readonly zoomPercentage = computed(() => Math.round(this.zoomScale() * 100));
+  readonly minZoom = 0.8;
+  readonly maxZoom = 2;
+  readonly zoomStep = 0.2;
 
   readonly slideTemplate = contentChild<TemplateRef<CarouselTemplateContext>>('slideContent');
   readonly currentSlide = computed(() => this.slides()[this.activeSlide()] ?? null);
@@ -38,6 +44,7 @@ export class CarouselComponent {
     if (slides.length === 0) return;
 
     this.activeSlide.update((current) => (current === 0 ? slides.length - 1 : current - 1));
+    this.resetZoom();
   }
 
   nextSlide(): void {
@@ -45,12 +52,26 @@ export class CarouselComponent {
     if (slideCount === 0) return;
 
     this.activeSlide.update((current) => (current + 1) % slideCount);
+    this.resetZoom();
   }
 
   selectSlide(index: number): void {
     if (index >= 0 && index < this.slides().length) {
       this.activeSlide.set(index);
+      this.resetZoom();
     }
+  }
+
+  zoomIn(): void {
+    this.zoomScale.update((current) => Math.min(this.maxZoom, current + this.zoomStep));
+  }
+
+  zoomOut(): void {
+    this.zoomScale.update((current) => Math.max(this.minZoom, current - this.zoomStep));
+  }
+
+  private resetZoom(): void {
+    this.zoomScale.set(1);
   }
 
   tabId(index: number): string {
